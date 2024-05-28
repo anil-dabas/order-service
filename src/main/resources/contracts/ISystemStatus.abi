@@ -1,0 +1,1 @@
+[{"inputs":[{"internalType":"bytes32","name":"marketKey","type":"bytes32"}],"name":"requireFuturesMarketActive","outputs":[],"stateMutability":"view","type":"function"}]

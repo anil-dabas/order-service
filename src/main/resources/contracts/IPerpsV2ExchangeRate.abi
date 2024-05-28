@@ -1,0 +1,1 @@
+[{"inputs":[{"internalType":"bytes32","name":"assetId","type":"bytes32"}],"name":"resolveAndGetLatestPrice","outputs":[{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"uint256","name":"publishTime","type":"uint256"}],"stateMutability":"view","type":"function"}]

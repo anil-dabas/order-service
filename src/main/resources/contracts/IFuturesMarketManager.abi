@@ -1,0 +1,1 @@
+[{"inputs":[{"internalType":"bytes32","name":"marketKey","type":"bytes32"}],"name":"marketForKey","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]
