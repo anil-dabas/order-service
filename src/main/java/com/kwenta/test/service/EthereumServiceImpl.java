@@ -14,6 +14,7 @@ import org.web3j.tx.gas.DefaultGasProvider;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.kwenta.test.constant.Constants.*;
@@ -44,7 +45,6 @@ public class EthereumServiceImpl {
             // Calculating the block for the next iteration
 
             BigInteger nb = sb.add(STEP).min(latestBlock);
-            System.out.println("NB " +nb);
             DefaultBlockParameter startBlock = DefaultBlockParameter.valueOf(sb);
             DefaultBlockParameter nextBlock = DefaultBlockParameter.valueOf(nb);
 
@@ -79,24 +79,32 @@ public class EthereumServiceImpl {
                         .reduceOnly(resp.reduceOnly).marginDelta(resp.marginDelta).sizeDelta(resp.sizeDelta).readyForExecution(false).build();
                 conditionalOrderRepository.save(order);
             }
-            collectedEvents.add(resp);
-            System.out.println(" Order placed Event " + collectedEvents.size());
         }, error -> System.out.println(error.getMessage()));
     }
 
     private void extractOrderDetailsFromOrderCancelledEvent(Flowable<ConditionalOrderCancelledEventResponse> orderCancelledEventResponseFlowable, List<BaseEventResponse> collectedEvents) {
         orderCancelledEventResponseFlowable.subscribe(log -> {
             ConditionalOrderCancelledEventResponse resp = getConditionalOrderCancelledEventFromLog(log.log);
-            collectedEvents.add(resp);
-            System.out.println(" Order Cancelled Event " + collectedEvents.size());
+            Optional<ConditionalOrder> optionalOrder = conditionalOrderRepository.findById(resp.conditionalOrderId);
+            if(optionalOrder.isPresent()){
+                ConditionalOrder order = optionalOrder.get();
+                order.setCancelReason(resp.reason);
+                conditionalOrderRepository.save(order);
+            }
         }, error -> System.out.println(error.getMessage()));
     }
 
     private void extractOrderDetailsFromOrderFilledEvent(Flowable<ConditionalOrderFilledEventResponse> orderFilledEventResponseFlowable, List<BaseEventResponse> collectedEvents) {
         orderFilledEventResponseFlowable.subscribe(log -> {
             ConditionalOrderFilledEventResponse resp = getConditionalOrderFilledEventFromLog(log.log);
-            collectedEvents.add(resp);
-            System.out.println(" Order Filled Event " + collectedEvents.size());
+            Optional<ConditionalOrder> optionalOrder = conditionalOrderRepository.findById(resp.conditionalOrderId);
+            if(optionalOrder.isPresent()){
+                ConditionalOrder order = optionalOrder.get();
+                order.setFillPrice(resp.fillPrice);
+                order.setKeeperFee(resp.keeperFee);
+                order.setPriceOracle(resp.priceOracle);
+                conditionalOrderRepository.save(order);
+            }
         }, error -> System.out.println(error.getMessage()));
     }
 }

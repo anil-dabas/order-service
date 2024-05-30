@@ -199,7 +199,7 @@ public class Events extends Contract {
         return conditionalOrderFilledEventFlowable(filter);
     }
 
-  /*  public static List<ConditionalOrderPlacedEventResponse> getConditionalOrderPlacedEvents(TransactionReceipt transactionReceipt) {
+    public static List<ConditionalOrderPlacedEventResponse> getConditionalOrderPlacedEvents(TransactionReceipt transactionReceipt) {
         List<EventValuesWithLog> valueList = staticExtractEventParametersWithLog(CONDITIONALORDERPLACED_EVENT, transactionReceipt);
         ArrayList<ConditionalOrderPlacedEventResponse> responses = new ArrayList<ConditionalOrderPlacedEventResponse>(valueList.size());
         for (EventValuesWithLog eventValues : valueList) {
@@ -236,11 +236,10 @@ public class Events extends Contract {
         typedResponse.reduceOnly = (Boolean) eventValues.getNonIndexedValues().get(6).getValue();
         return typedResponse;
     }
-*/
 
 
 
-    public static List<ConditionalOrderPlacedEventResponse> getConditionalOrderPlacedEvents(TransactionReceipt transactionReceipt) {
+/*    public static List<ConditionalOrderPlacedEventResponse> getConditionalOrderPlacedEvents(TransactionReceipt transactionReceipt) {
         List<EventValuesWithLog> valueList = staticExtractEventParametersWithLog(CONDITIONALORDERPLACED_EVENT, transactionReceipt);
         ArrayList<ConditionalOrderPlacedEventResponse> responses = new ArrayList<ConditionalOrderPlacedEventResponse>(valueList.size());
         for (EventValuesWithLog eventValues : valueList) {
@@ -274,7 +273,7 @@ public class Events extends Contract {
         typedResponse.desiredFillPrice = (BigInteger) eventValues.getNonIndexedValues().get(6).getValue();
         typedResponse.reduceOnly = (Boolean) eventValues.getNonIndexedValues().get(7).getValue();
         return typedResponse;
-    }
+    }*/
     public Flowable<ConditionalOrderPlacedEventResponse> conditionalOrderPlacedEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(log -> getConditionalOrderPlacedEventFromLog(log));
     }
