@@ -1,5 +1,24 @@
 # About the Project 
 
+## Instructions to run the application 
+
+- Download the zip from the github or clone the project 
+- make sure you keep port 8080  free 
+- Go to the root directory in the mac terminal or intellij terminal 
+-    1. For Mac / Linux
+        ```./gradlew bootRun```
+- you will get the startup logs as below 
+- ![img_13.png](img_13.png)
+
+## Technologies involved 
+
+- Java 17
+- SpringBoot , REST APIs 
+- H2 database 
+- Config for Postgres
+- Web3j java lib
+- OP mainnet
+
 ## Basic Implementation 
 
 - This project is an implementation to read the Limit orders from Op Mainnet using Subgraph Implementation as well as read the conditional orders from the OP Mainnet using the Blocks
