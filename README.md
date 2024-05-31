@@ -8,7 +8,7 @@
 -    1. For Mac / Linux
         ```./gradlew bootRun```
 - you will get the startup logs as below 
-- ![img_13.png](img_13.png)
+- ![img_13.png](images/img_13.png)
 
 ## Technologies involved 
 
@@ -24,32 +24,32 @@
 - This project is an implementation to read the Limit orders from Op Mainnet using Subgraph Implementation as well as read the conditional orders from the OP Mainnet using the Blocks
 - Adding the limit orders to H2 database for now (Default)
 - (The implementation for postgres is also similar but for that the assessor needs to setup the postgres DB hence I am using H2 database for example However in application.yaml I have added the properties for Postgres connection we can create similar DB in local or can provide the connection details in the commented part shown in the properties and then comment the H2 related settings as shown below)
-- ![img_7.png](img_7.png)
-- ![img_8.png](img_8.png)
+- ![img_7.png](images/img_7.png)
+- ![img_8.png](images/img_8.png)
 - The data can be seen on the H2 database console using below steps
     1. after starting the application on Port 8080 go to the URL
     2. http://localhost:8080/h2-console/login.jsp
     3. login using password as password
     4. then you can see
-        1. ![img.png](img.png)
-        2. ![img_1.png](img_1.png)
-        3. ![img_2.png](img_2.png)
+        1. ![img.png](images/img.png)
+        2. ![img_1.png](images/img_1.png)
+        3. ![img_2.png](images/img_2.png)
 
 ## Subgraph Implementation 
 - The endpoint to read orders that are fetched from subgraph on the basis of Market key and account as filter is  http://localhost:8080/orders/subgraph
-  1. When No filter is used ![img_3.png](img_3.png)
-  2. When account filter is applied ![img_4.png](img_4.png)
-  3. When Market filter is applied ![img_5.png](img_5.png)
-  4. When both account and marketKey filters are applied ![img_6.png](img_6.png)
+  1. When No filter is used ![img_3.png](images/img_3.png)
+  2. When account filter is applied ![img_4.png](images/img_4.png)
+  3. When Market filter is applied ![img_5.png](images/img_5.png)
+  4. When both account and marketKey filters are applied ![img_6.png](images/img_6.png)
 
 
 
 ## Chain Implementation
 - The endpoint to read orders that are fetched from subgraph on the basis of Market key and account as filter is  http://localhost:8080/orders/chain
-    1. When No filter is used ![img_9.png](img_9.png)
-    2. When account filter is applied ![img_10.png](img_10.png)
-    3. When Market filter is applied ![img_11.png](img_11.png)
-    4. When both account and marketKey filters are applied ![img_12.png](img_12.png)
+    1. When No filter is used ![img_9.png](images/img_9.png)
+    2. When account filter is applied ![img_10.png](images/img_10.png)
+    3. When Market filter is applied ![img_11.png](images/img_11.png)
+    4. When both account and marketKey filters are applied ![img_12.png](images/img_12.png)
 
 
 ## Questions to answer in readme 
