@@ -1,4 +1,4 @@
-package com.kwenta.test.service;
+package com.kwenta.test.repository;
 
 import com.kwenta.test.model.ConditionalOrder;
 import org.springframework.data.jpa.repository.JpaRepository;

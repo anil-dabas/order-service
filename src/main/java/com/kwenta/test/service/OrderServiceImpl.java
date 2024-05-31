@@ -2,13 +2,13 @@ package com.kwenta.test.service;
 
 import com.kwenta.test.model.ConditionalOrder;
 import com.kwenta.test.model.Order;
+import com.kwenta.test.repository.ConditionalOrderRepository;
 import com.kwenta.test.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Service
