@@ -1,6 +1,5 @@
 package com.kwenta.test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kwenta.test.service.EthereumServiceImpl;
 import com.kwenta.test.service.SubgraphFetchServiceImpl;
 import org.springframework.boot.SpringApplication;

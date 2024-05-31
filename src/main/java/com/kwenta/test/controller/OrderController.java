@@ -18,11 +18,9 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
-    private final ModelMapper modelMapper;
     @Autowired
     public OrderController(OrderService orderService){
         this.orderService = orderService;
-        modelMapper = new ModelMapper();
     }
 
     @GetMapping("/subgraph")

@@ -73,7 +73,7 @@ public class EthereumServiceImpl {
 
     }
 
-    @Scheduled(fixedRate = 6000)  // Run every 60 seconds
+    @Scheduled(fixedRate = 60000)  // Run every 60 seconds
     public void processPendingOrders() {
         List<ConditionalOrder> pendingOrders = conditionalOrderRepository.findAllByReadyForExecutionFalse();
         for (ConditionalOrder order : pendingOrders) {
