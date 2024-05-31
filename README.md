@@ -231,3 +231,7 @@ public class TransactionProcessor {
 }
 
 ```
+
+### Adding the screenshot of my Alchemy dashboard for total requests 
+
+![img.png](images/img_14.png)
