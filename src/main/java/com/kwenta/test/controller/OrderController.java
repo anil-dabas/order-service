@@ -1,7 +1,7 @@
 package com.kwenta.test.controller;
 
+import com.kwenta.test.model.ConditionalOrder;
 import com.kwenta.test.model.Order;
-import com.kwenta.test.model.OrderDTO;
 import com.kwenta.test.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,17 @@ public class OrderController {
         modelMapper = new ModelMapper();
     }
 
-    @GetMapping
-    public ResponseEntity<List<OrderDTO>> getOrders(@RequestParam(required = false) String account,
+    @GetMapping("/subgraph")
+    public ResponseEntity<List<Order>> getOrders(@RequestParam(required = false) String account,
                                                     @RequestParam(required = false) String marketKey){
         List<Order> orders = orderService.getOrders(account,marketKey);
-        List<OrderDTO> orderDTOS = orders.stream().map(order -> modelMapper.map(order,OrderDTO.class)).toList();
-        return ResponseEntity.ok(orderDTOS);
+        return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/chain")
+    public ResponseEntity<List<ConditionalOrder>> getConditionalOrders(@RequestParam(required = false) String account,
+                                                    @RequestParam(required = false) String marketKey){
+        List<ConditionalOrder> orders = orderService.getConditionalOrders(account,marketKey);
+        return ResponseEntity.ok(orders);
     }
 }

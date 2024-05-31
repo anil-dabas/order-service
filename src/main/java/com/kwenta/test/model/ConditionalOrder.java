@@ -23,7 +23,7 @@ public class ConditionalOrder {
     private BigInteger orderId;
     public String account;
     public byte[] gelatoTaskId;
-    public byte[] marketKey;
+    public String marketKey;
     public BigInteger marginDelta;
     public BigInteger sizeDelta;
     public BigInteger targetPrice;

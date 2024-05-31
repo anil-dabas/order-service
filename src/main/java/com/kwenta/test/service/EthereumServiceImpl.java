@@ -4,15 +4,19 @@ import com.kwenta.test.generatedfiles.Events;
 import com.kwenta.test.model.ConditionalOrder;
 import io.reactivex.Flowable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
-import org.web3j.protocol.core.methods.response.BaseEventResponse;
+import org.web3j.protocol.core.RemoteFunctionCall;
+import org.web3j.protocol.core.methods.response.*;
 import org.web3j.tx.gas.DefaultGasProvider;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -70,12 +74,32 @@ public class EthereumServiceImpl {
 
     }
 
+    @Scheduled(fixedRate = 6000)  // Run every 60 seconds
+    public void processPendingOrders() {
+        List<ConditionalOrder> pendingOrders = conditionalOrderRepository.findAllByReadyForExecutionFalse();
+        for (ConditionalOrder order : pendingOrders) {
+            if (isOrderReadyForExecution(order)) {
+                order.setReadyForExecution(true);
+                conditionalOrderRepository.save(order);
+            }
+        }
+    }
+
+    private boolean isOrderReadyForExecution(ConditionalOrder order) {
+        try {
+            BigInteger gasUsed = eventsContract.emitConditionalOrderPlaced(order.getOrderId(), order.getGelatoTaskId(),order.getMarketKey().getBytes(StandardCharsets.UTF_8),order.getMarginDelta(),order.getSizeDelta(),order.getTargetPrice(),order.getConditionalOrderType(),order.getDesiredFillPrice(),order.getReduceOnly()).send().getCumulativeGasUsed();
+            return gasUsed.compareTo(DefaultGasProvider.GAS_LIMIT) < 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private void extractOrderDetailsFromOrderPlacedEvent(Flowable<ConditionalOrderPlacedEventResponse> orderPlacedEventFlowable, List<BaseEventResponse> collectedEvents) {
         orderPlacedEventFlowable.subscribe(log -> {
             ConditionalOrderPlacedEventResponse resp = getConditionalOrderPlacedEventFromLog(log.log);
             if(resp.conditionalOrderType.intValue() == 0){
                 ConditionalOrder order = ConditionalOrder.builder().orderId(resp.conditionalOrderId).account(resp.account).conditionalOrderType(resp.conditionalOrderType)
-                        .desiredFillPrice(resp.desiredFillPrice).desiredFillPrice(resp.desiredFillPrice).gelatoTaskId(resp.gelatoTaskId).marketKey(resp.marketKey)
+                        .desiredFillPrice(resp.desiredFillPrice).desiredFillPrice(resp.desiredFillPrice).marketKey(new String (resp.marketKey, StandardCharsets.UTF_8).replace("\u0000", ""))
                         .reduceOnly(resp.reduceOnly).marginDelta(resp.marginDelta).sizeDelta(resp.sizeDelta).readyForExecution(false).build();
                 conditionalOrderRepository.save(order);
             }

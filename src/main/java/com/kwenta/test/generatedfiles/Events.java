@@ -238,42 +238,6 @@ public class Events extends Contract {
     }
 
 
-
-/*    public static List<ConditionalOrderPlacedEventResponse> getConditionalOrderPlacedEvents(TransactionReceipt transactionReceipt) {
-        List<EventValuesWithLog> valueList = staticExtractEventParametersWithLog(CONDITIONALORDERPLACED_EVENT, transactionReceipt);
-        ArrayList<ConditionalOrderPlacedEventResponse> responses = new ArrayList<ConditionalOrderPlacedEventResponse>(valueList.size());
-        for (EventValuesWithLog eventValues : valueList) {
-            ConditionalOrderPlacedEventResponse typedResponse = new ConditionalOrderPlacedEventResponse();
-            typedResponse.log = eventValues.getLog();
-            typedResponse.account = (String) eventValues.getIndexedValues().get(0).getValue();
-            typedResponse.conditionalOrderId = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
-            typedResponse.marketKey = (byte[]) eventValues.getNonIndexedValues().get(1).getValue();
-            typedResponse.marginDelta = (BigInteger) eventValues.getNonIndexedValues().get(2).getValue();
-            typedResponse.sizeDelta = (BigInteger) eventValues.getNonIndexedValues().get(3).getValue();
-            typedResponse.targetPrice = (BigInteger) eventValues.getNonIndexedValues().get(4).getValue();
-            typedResponse.conditionalOrderType = (BigInteger) eventValues.getNonIndexedValues().get(5).getValue();
-            typedResponse.desiredFillPrice = (BigInteger) eventValues.getNonIndexedValues().get(6).getValue();
-            typedResponse.reduceOnly = (Boolean) eventValues.getNonIndexedValues().get(7).getValue();
-            responses.add(typedResponse);
-        }
-        return responses;
-    }
-
-    public static ConditionalOrderPlacedEventResponse getConditionalOrderPlacedEventFromLog(Log log) {
-        EventValuesWithLog eventValues = staticExtractEventParametersWithLog(CONDITIONALORDERPLACED_EVENT, log);
-        ConditionalOrderPlacedEventResponse typedResponse = new ConditionalOrderPlacedEventResponse();
-        typedResponse.log = log;
-        typedResponse.account = (String) eventValues.getIndexedValues().get(0).getValue();
-        typedResponse.conditionalOrderId = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
-        typedResponse.marketKey = (byte[]) eventValues.getNonIndexedValues().get(1).getValue();
-        typedResponse.marginDelta = (BigInteger) eventValues.getNonIndexedValues().get(2).getValue();
-        typedResponse.sizeDelta = (BigInteger) eventValues.getNonIndexedValues().get(3).getValue();
-        typedResponse.targetPrice = (BigInteger) eventValues.getNonIndexedValues().get(4).getValue();
-        typedResponse.conditionalOrderType = (BigInteger) eventValues.getNonIndexedValues().get(5).getValue();
-        typedResponse.desiredFillPrice = (BigInteger) eventValues.getNonIndexedValues().get(6).getValue();
-        typedResponse.reduceOnly = (Boolean) eventValues.getNonIndexedValues().get(7).getValue();
-        return typedResponse;
-    }*/
     public Flowable<ConditionalOrderPlacedEventResponse> conditionalOrderPlacedEventFlowable(EthFilter filter) {
         return web3j.ethLogFlowable(filter).map(log -> getConditionalOrderPlacedEventFromLog(log));
     }

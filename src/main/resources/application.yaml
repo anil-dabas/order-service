@@ -7,7 +7,15 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: password
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/orders
+#    username: anil
+#    password: erias007
+#    driver-class-name: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
     show-sql: true
-    defer-datasource-initialization: true
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+#      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
